@@ -1,15 +1,4 @@
-// content.js – scrapes conversation & injects panel
-(async function () {
-  const host = location.hostname;
-  if (!/instagram\.com|whatsapp\.com/.test(host)) return;
-
-  // Listen for popup commands
-  chrome.runtime.onMessage.addListener((msg) => {
-    if (msg.cmd === "OPEN_PANEL") injectPanel();
-    if (msg.cmd === "GET_CONVO") copyConversation();
-  });
-
-  async function copyConversation() {
+async function copyConversation() {
     window.scrollTo(0, document.body.scrollHeight);
     let lastHeight = 0;
     while (document.documentElement.scrollTop !== 0) {
@@ -33,9 +22,12 @@
 
   function injectPanel() {
     if (document.getElementById("nil-agent-panel")) return;
-    const iframe = document.createElement("iframe");
+    const iframe = document.createElement("iframe");␍␊
     iframe.src = chrome.runtime.getURL("panel.html");
-    iframe.id = "nil-agent-panel";
+    iframe.id = "nil-agent-panel";␍␊
+    const iframe = document.createElement("iframe");␊
+    iframe.src = chrome.runtime.getURL("sidepanel.html");
+    iframe.id = "nil-agent-panel";␊
     Object.assign(iframe.style, {
       position: "fixed",
       top: 0,
